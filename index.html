@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#4c1d95" />
+  <meta name="description" content="Check WCAG contrast ratios for color pairs in your browser. Nothing uploaded." />
+  <title>PaletteProof — WCAG contrast checker</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>PaletteProof</h1>
+      <p class="sub">Pick foreground and background colors. See WCAG 2.x contrast pass/fail instantly. Everything stays in your browser.</p>
+    </header>
+
+    <section class="card colors">
+      <div class="color-pair">
+        <div class="color-field">
+          <label class="lbl" for="fgHex">Foreground</label>
+          <div class="picker-row">
+            <input type="color" id="fgPicker" value="#f8fafc" aria-label="Foreground color picker" />
+            <input type="text" id="fgHex" value="#F8FAFC" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Foreground hex" />
+          </div>
+        </div>
+        <button type="button" class="ghost swap" id="swapBtn" title="Swap colors" aria-label="Swap foreground and background">⇄</button>
+        <div class="color-field">
+          <label class="lbl" for="bgHex">Background</label>
+          <div class="picker-row">
+            <input type="color" id="bgPicker" value="#312e81" aria-label="Background color picker" />
+            <input type="text" id="bgHex" value="#312E81" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Background hex" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card ratio-card" aria-live="polite">
+      <p class="ratio-label">Contrast ratio</p>
+      <p class="ratio" id="ratio">—</p>
+      <p class="luma" id="luma"></p>
+    </section>
+
+    <section class="card badges" id="badges" aria-label="WCAG results">
+      <div class="badge" data-key="aa-normal">
+        <span class="badge-name">AA normal text</span>
+        <span class="badge-thresh">≥ 4.5:1</span>
+        <span class="badge-status">—</span>
+      </div>
+      <div class="badge" data-key="aa-large">
+        <span class="badge-name">AA large text</span>
+        <span class="badge-thresh">≥ 3:1</span>
+        <span class="badge-status">—</span>
+      </div>
+      <div class="badge" data-key="aaa-normal">
+        <span class="badge-name">AAA normal text</span>
+        <span class="badge-thresh">≥ 7:1</span>
+        <span class="badge-status">—</span>
+      </div>
+      <div class="badge" data-key="aaa-large">
+        <span class="badge-name">AAA large text</span>
+        <span class="badge-thresh">≥ 4.5:1</span>
+        <span class="badge-status">—</span>
+      </div>
+      <div class="badge" data-key="ui">
+        <span class="badge-name">UI / non-text</span>
+        <span class="badge-thresh">≥ 3:1</span>
+        <span class="badge-status">—</span>
+      </div>
+    </section>
+
+    <section class="card preview" id="preview">
+      <h2 class="preview-heading" id="previewHeading">Large heading sample</h2>
+      <p class="preview-body" id="previewBody">Body text sample — The quick brown fox jumps over the lazy dog. Contrast should stay readable at normal size.</p>
+      <div class="preview-ui">
+        <button type="button" class="preview-btn" id="previewBtn" tabindex="-1">Sample button</button>
+        <span class="preview-icon" aria-hidden="true">●</span>
+        <span class="preview-link">Sample link</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Quick presets</h2>
+      <div class="presets" id="presets" role="list"></div>
+    </section>
+
+    <details class="card">
+      <summary>How contrast is calculated</summary>
+      <p>
+        Uses WCAG 2.x relative luminance with sRGB linearization, then
+        <code>(L1 + 0.05) / (L2 + 0.05)</code> where L1 is the lighter color.
+        Large text means ~18pt regular or 14pt bold. UI / non-text covers icons,
+        borders, and graphical objects (WCAG 1.4.11).
+      </p>
+    </details>
+  </main>
+  <footer>
+    Free &amp; open source · <a href="https://github.com/shaikbasha1437/paletteproof">GitHub</a>
+  </footer>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
+  </script>
+</body>
+</html>

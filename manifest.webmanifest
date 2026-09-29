@@ -1,0 +1,10 @@
+{
+  "name": "PaletteProof",
+  "short_name": "PaletteProof",
+  "description": "In-browser WCAG contrast & palette checker.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f0a1a",
+  "theme_color": "#4c1d95",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
